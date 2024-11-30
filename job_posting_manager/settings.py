@@ -17,6 +17,9 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+from dotenv import dotenv_values
+
+config = dotenv_values(".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -111,11 +114,11 @@ DATABASES = {
 
    'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'jobportal',
-        'USER': 'repute',
-        'PASSWORD': 'PNR4erp!!!',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'NAME': config.get('DB_NAME', 'jobportal'),  # Default to 'editorial_manager' if not set
+        'USER': config.get('DB_USER', 'repute'),  # Default to 'root' if not set
+        'PASSWORD': config.get('DB_PASSWORD', 'PNR4erp!!!'),  # Default password if not set
+        'HOST': config.get('DB_HOST', '127.0.0.1'),  # Default to '127.0.0.1' if not set
+        'PORT': config.get('DB_PORT', '3306'),  # Default to '3306' if not set      
         'OPTIONS': {
         'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },

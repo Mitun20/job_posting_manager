@@ -80,7 +80,7 @@ class AdvancedSearchAPIView(APIView):
         if title:
             filters['title__icontains'] = title
         if role_name:
-            filters['role__role_name__icontains'] = role_name
+            filters['role_name__icontains'] = role_name
         if department_name:
             filters['department__department_name__icontains'] = department_name
 
@@ -95,7 +95,7 @@ class AdvancedSearchAPIView(APIView):
                 "job_posting_id": item['id'],
                 "job_title": item['title'],
                 "department": item['department']['department_name'],  # Ensure this is correctly serialized
-                "role": item['role']['role_name'],  # Ensure this is correctly serialized
+                "role": item['role_name'],  # Ensure this is correctly serialized
                 "posted_on": item['posted_on'],
                 "close_date": item['close_date'],
                 "location": item['location'],

@@ -434,7 +434,7 @@ class AdvancedSearchAPIView(APIView):
         if title:
             filters['title__icontains'] = title
         if role_name:
-            filters['role__role_name__icontains'] = role_name
+            filters['role_name__icontains'] = role_name
         if department_name:
             filters['department__department_name__icontains'] = department_name
 
@@ -449,7 +449,7 @@ class AdvancedSearchAPIView(APIView):
                 "id": item['id'],
                 "title": item['title'],
                 "department": item['department']['department_name'],  # Ensure this is correctly serialized
-                "role": item['role']['role_name'],  # Ensure this is correctly serialized
+                "role": item['role_name'],  # Ensure this is correctly serialized
                 "number_of_applicants": item['number_of_applicants'],
                 "is_active": item['is_active'],
             }
@@ -487,5 +487,3 @@ class PostFilterView(APIView):
 
         serializer = SearchSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-
