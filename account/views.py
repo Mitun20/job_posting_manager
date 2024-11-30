@@ -275,7 +275,10 @@ class CreatePosts(APIView):
 
     def post(self, request):
         image = request.FILES.get('image')
-        
+        close_date = request.data.get('close_date', None)
+        if close_date == "":
+            close_date = None
+            
         post = Posts(
             title=request.data.get('title'),
             department_id=request.data.get('department'),
@@ -284,7 +287,7 @@ class CreatePosts(APIView):
             experience_from=request.data.get('experience_from'),
             experience_to=request.data.get('experience_to'),
             salary=request.data.get('salary'),
-            close_date=request.data.get('close_date',None),
+            close_date=close_date,
             posted_by=request.user,
             location=request.data.get('location'),
             image=image if image else None
