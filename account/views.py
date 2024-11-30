@@ -307,7 +307,7 @@ class UpdatePosts(APIView):
         except Posts.DoesNotExist:
             return Response({"message": "Post not found"}, status=status.HTTP_404_NOT_FOUND)
 
-    def post(self, request, post_id):
+def post(self, request, post_id):
         try:
             post = Posts.objects.get(id=post_id)
         except Posts.DoesNotExist:
@@ -316,6 +316,11 @@ class UpdatePosts(APIView):
         # Extract the image and other fields from the request
         image = request.FILES.get('image')
         
+        # Handle close_date field (set to None if empty string)
+        close_date = request.data.get('close_date', post.close_date)
+        if close_date == "":
+            close_date = None  # Set to None if empty string is provided
+
         # Update the post fields
         post.title = request.data.get('title', post.title)
         post.department_id = request.data.get('department', post.department_id)
@@ -324,11 +329,11 @@ class UpdatePosts(APIView):
         post.experience_from = request.data.get('experience_from', post.experience_from)
         post.experience_to = request.data.get('experience_to', post.experience_to)
         post.salary = request.data.get('salary', post.salary)
-        post.close_date = request.data.get('close_date', post.close_date)
+        post.close_date = close_date  # Set close_date after checking for null
         post.location = request.data.get('location', post.location)
         
         if image:
-            post.image = image
+            post.image = image  # Update image if provided
 
         post.save()
         return Response({"message": "Post updated successfully"}, status=status.HTTP_200_OK)
