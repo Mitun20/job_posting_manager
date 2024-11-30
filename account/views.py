@@ -271,27 +271,26 @@ class get_role(APIView):
 
 class CreatePosts(APIView):
     permission_classes = [IsAuthenticated]
-    parser_classes = (MultiPartParser, FormParser)
+    # parser_classes = (MultiPartParser, FormParser)
 
     def post(self, request):
         image = request.FILES.get('image')
-        if image:
-            post = Posts(
-                title=request.data.get('title'),
-                department_id=request.data.get('department'),
-                role=request.data.get('role'),
-                description=request.data.get('description'),
-                experience_from=request.data.get('experience_from'),
-                experience_to=request.data.get('experience_to'),
-                salary=request.data.get('salary'),
-                close_date=request.data.get('close_date'),
-                posted_by=request.user,
-                location=request.data.get('location'),
-                image=image
-            )
-            post.save()
-            return Response({"message": "Job posted successfully"}, status=status.HTTP_201_CREATED)
-        return Response({"error": "Image not found"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        post = Posts(
+            title=request.data.get('title'),
+            department_id=request.data.get('department'),
+            role=request.data.get('role'),
+            description=request.data.get('description'),
+            experience_from=request.data.get('experience_from'),
+            experience_to=request.data.get('experience_to'),
+            salary=request.data.get('salary'),
+            close_date=request.data.get('close_date',None),
+            posted_by=request.user,
+            location=request.data.get('location'),
+            image=image if image else None
+        )
+        post.save()
+        return Response({"message": "Job posted successfully"}, status=status.HTTP_201_CREATED)
 
 class UpdatePosts(APIView):
     permission_classes = [IsAuthenticated]

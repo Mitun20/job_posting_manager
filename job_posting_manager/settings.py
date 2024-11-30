@@ -30,7 +30,7 @@ SECRET_KEY = "django-insecure-kfi(o-jl_y(3&v(g1bd#+-mws$m&n^c*dld)m$b$kixc^octz9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["careers.karpagamhospital.in","jobs.karpagamhospital.in","localhost","127.0.0.0"]
+ALLOWED_HOSTS = ["careers.karpagamhospital.in","jobs.karpagamhospital.in","localhost","127.0.0.1"]
 
 
 # Application definition
