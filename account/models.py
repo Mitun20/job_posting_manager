@@ -23,7 +23,7 @@ class Posts(models.Model):
     description = models.TextField(null=True, blank=True)
     experience_from = models.IntegerField()
     experience_to = models.IntegerField()
-    salary = models.DecimalField(max_digits=10, decimal_places=2)
+    salary = models.CharField(max_length=255)
     close_date = models.DateField(null=True, blank=True)
     image = models.ImageField(upload_to='post_images/',null=True, blank=True)
     posted_by = models.ForeignKey(User, on_delete=models.CASCADE)
